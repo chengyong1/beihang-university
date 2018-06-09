@@ -1,0 +1,55 @@
+题目要求：阶乘数。输入一个正整数，输出时，先输出这个数本身，跟着一个逗号，再输出这个数的各位数字的阶乘和，等号，阶乘和的计算结果，
+并判断阶乘和是否等于原数，如果相等输出Yes，否则输出No。题目说明输入的正整数以及其各位阶乘和都不会超出int型的表示范围。
+
+输入样例1：
+       145
+输出样例1：
+       145,1!+4!+5!=145
+       Yes
+
+输入样例2：
+       1400
+输出样例2：
+       1400,1!+4!+0!+0!=27
+       No
+//
+// Created by 程勇 on 2018/6/7.
+//
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int jiecheng(int n) {
+    int anw = 1;
+    if (n == 0 or n == 1)
+        return 1;
+    else
+        anw = n * jiecheng(n - 1);
+    return anw;
+}
+
+int main() {
+    int n, a;
+    cin >> n;
+    a = n;
+    vector<int> capacity;
+    while (n != 0) {
+        int temp = n % 10;
+        capacity.push_back(temp);
+        n = n / 10;
+    }
+    int flag = 0;
+    cout << a << ",";
+    for (int i = capacity.size() - 1; i > 0; i--) {
+        cout << capacity[i] << "!" << "+";
+        flag += jiecheng(capacity[i]);
+    }
+    cout << capacity[0] << "!" << "=";
+    flag += jiecheng(capacity[0]);
+    cout << flag << endl;
+    if (flag == a)
+        cout << "Yes";
+    if (flag != a)
+        cout << "No";
+    return 0;
+}
